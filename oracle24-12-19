@@ -1,0 +1,122 @@
+--ques 1
+select * from jobs where min_salary >10000;
+
+--ques 2
+select first_name,hire_date from employees where hire_date between '01-jan-1980' and '31-dec-1995';
+
+--ques 3
+select first_name,hire_date from employees e,jobs j
+where e.job_id=j.job_id and
+j.job_title in('Programmer','Sales Manager');
+
+--ques 4
+select first_name from employees 
+where hire_date > '01-jan-1995';
+
+--ques 5
+select * from employees where employee_id in(150,160);
+
+--ques 6
+select first_name, salary,commission_pct, hire_date from employees
+where salary<10000;
+
+--ques 7
+select job_title, max_salary-min_salary as difference from jobs
+where max_salary between 10000 and 20000;
+
+--ques 8
+select first_name, round((salary/1000)*1000)as salary from employees;
+
+--ques 9
+select * from jobs
+order by job_title desc;
+
+--ques 10
+select * from employees
+where first_name like 'S%' or last_name like 'S%';
+
+--ques 11
+select * from employees where
+extract(month from(hire_date)) in (5,5);
+
+--ques 12
+select * from employees 
+where commission_pct is null
+and salary between 5000 and 10000
+and department_id =60;
+
+--ques 13
+select first_name, last_day(hire_date) from employees;
+
+--ques 14
+select first_name ,concat(round((to_date(sysdate)-to_date(hire_date))/365),' years') as experience from employees;
+
+--ques 15
+select first_name from employees where
+extract(year from (hire_date)) =2000;
+
+--ques 16
+select concat(upper(substr(first_name,1,1)),lower(substr(first_name,2))) as first_name ,
+concat(upper(substr(last_name,1,1)),lower(substr(last_name,2))) as last_name
+from employees;
+
+--ques 17
+select substr(job_title,1,instr(concat(job_title,' '),' ')) from jobs;
+
+--ques 18
+select length(first_name) from employees
+where last_name like '___b%';
+
+--ques 19
+select upper(first_name), lower(email) from employees
+where lower(first_name)=lower(email);
+
+--ques 20
+select * from employees
+where extract(year from(hire_date))=extract(year from(sysdate));
+
+--ques 21
+select to_date(sysdate)-to_date('01-jan-11') from dual;
+
+--ques 22
+select count(*) from employees group by extract(month from(hire_date));
+
+--ques 23
+select manager_id, count(employee_id) from employees group by manager_id;
+
+--ques 24
+select employee_id, to_date(hire_date)-1 from employees;
+
+--ques 25
+select count(*) from employees
+where extract(day from(hire_date))>15;
+
+--ques 26
+select country_id,count(city) from locations
+group by country_id;
+
+--ques 27
+select round(avg(salary)) from employees 
+where commission_pct is not null group by department_id;
+
+--ques 28
+select job_id, count(employee_id), sum(salary), max(salary)-min(salary)
+from employees
+group by job_id;
+
+--ques 29
+select * from 
+(select avg(salary) as avgsal from employees group by job_id) where avgsal>10000 ;
+
+--ques 30
+select * from (
+select count(*) as num from employees group by extract(year from(hire_date)))
+where num> 10;
+
+--ques 31
+select department_id from employees where commission_pct is not null group by department_id
+having count(commission_pct)>5;
+
+--ques32
+select employee_id from job_history 
+group by employee_id having count(*)>1;
